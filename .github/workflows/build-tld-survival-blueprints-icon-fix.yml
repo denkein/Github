@@ -7,6 +7,12 @@ on:
     paths:
       - 'TLD/SurvivalBlueprintsIconFix/**'
       - '.github/workflows/build-tld-survival-blueprints-icon-fix.yml'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'TLD/SurvivalBlueprintsIconFix/**'
+      - '.github/workflows/build-tld-survival-blueprints-icon-fix.yml'
   workflow_dispatch:
 
 jobs:
