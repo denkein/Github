@@ -1,0 +1,32 @@
+name: Build TLD Survival Blueprints Icon Fix
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'TLD/SurvivalBlueprintsIconFix/**'
+      - '.github/workflows/build-tld-survival-blueprints-icon-fix.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '6.0.x'
+      - name: Restore
+        run: dotnet restore TLD/SurvivalBlueprintsIconFix/SurvivalBlueprintsIconFix.csproj
+      - name: Build
+        run: dotnet build TLD/SurvivalBlueprintsIconFix/SurvivalBlueprintsIconFix.csproj -c Release --no-restore
+      - name: Prepare artifact
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path artifact | Out-Null
+          Copy-Item TLD/SurvivalBlueprintsIconFix/bin/Release/net6.0/SurvivalBlueprintsIconFix.dll artifact/SurvivalBlueprintsIconFix.dll
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SurvivalBlueprintsIconFix-v1.0.0
+          path: artifact/SurvivalBlueprintsIconFix.dll
